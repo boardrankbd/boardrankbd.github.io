@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Board Rank BD | SSC & HSC Board Rankings</title>
+    <meta name="description" content="This is an unofficial public exam ranking webapp. You can see your rank, individual result, institute result and so on...">
+    <meta name="author" content="SSC, HSC,  Board Rank, Result">
+    <meta name="google-site-verification" content="sE1DV48dbmHQ7E4854wQTDKiBRB_PuK7UegrusB1ems" />
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="bingbot" content="index, follow">
+    <meta name="yandexbot" content="index, follow">
+    <meta name="geo.region" content="BD">
+    <meta name="geo.country" content="Bangladesh">
+    <meta name="geo.placename" content="Chittagong, Bangladesh">
+    <meta http-equiv="content-language" content="en-us">
+    <meta property="og:title" content="Board Rank BD | SSC & HSC Board Rankings">
+    <meta property="og:description" content="View SSC and HSC board rankings, student results and institute rankings in Bangladesh.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://boardrankbd.vercel.app/">
+    <meta property="og:image" content="https://boardrankbd.vercel.app/rank/css/assets/logo.png">
+    <link rel="shortcut icon" href="rank/css/assets/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,1..1000&display=swap" rel="stylesheet">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        body{
+            background: #101e2b;
+            font-family: "Google Sans Flex", sans-serif;
+            font-optical-sizing: auto;
+            font-style: normal;
+            font-variation-settings:
+            "slnt" 0,
+            "wdth" 100,
+            "GRAD" 0,
+            "ROND" 0;
+            padding: 100px 0 0 0;
+        }
+        /*graphic background*/
+        .graphic-bg{
+            position: fixed;
+            z-index: -1;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+        .graphic-bg .dot{
+            width: 3px;
+            aspect-ratio: 1 / 1;
+            border-radius: 50%;
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            animation: drag 10s linear infinite;
+        }
+        @keyframes drag {
+            0%{
+                margin-left: 0;
+                margin-top: 0;
+            }
+            50%{
+                margin-top: 10px;
+                margin-left: 10px;
+            }
+            100%{
+                margin-left: 0;
+                margin-top: 0;
+            }
+        }
+        .nav{
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background: rgba(51, 49, 72, 0.3);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+        .nav .logo{
+            width: 50px;
+            aspect-ratio: 1 / 1;
+            background-image: url(rank/css/assets/logo.png);
+            background-size: 100%;
+            background-repeat: no-repeat;
+        }
+        .nav .banner a{
+            color: #eee;
+            font-size: 18px;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .container{
+            padding: 16px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+        .container .card{
+            background: #1a31467b;
+            border-radius: 8px;
+            box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.2);
+        }
+        .container .card .card-title{
+            color: #eee;
+            font-size: 24px;
+            text-align: center;
+            margin-top: 24px;
+            padding: 0 16px;
+        }
+        .container .card .description{
+            font-size: 16px;
+            text-align: center;
+            color: #d9d9d9;
+            margin-top: 12px;
+        }
+        .container .card .link-btns{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 24px 0;
+            gap: 12px;
+        }
+        .container .card .link-btns .btn{
+            background: #0080ff;
+            color: #fff;
+            text-decoration: none;
+            padding:8px 12px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+        .container .card .link-btns .btn:hover{
+            background: #208fff;
+        }
+        .container .card .link-btns .btn:active{
+            background: #005ab4;
+        }
+        @media (min-width:800px){
+            .container{
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        @media (min-width:1100px){
+            .container{
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+        }
+        @media (min-width:1400px){
+            .container{
+                grid-template-columns: 1fr 1fr 1fr 1fr;
+            }
+        }
+
+        .foot{
+            background: #1a3146;
+            margin:24px 12px 12px 12px ;
+            border-radius: 8px;
+        }
+        .foot .disclaimer{
+            color: #99a6d5;
+            font-size: 14px;
+            padding: 16px;
+        }
+        .foot .author{
+            color: #eee;
+            padding: 0 16px;
+            font-size: 14px;
+        }
+        .foot .copy-right{
+            color: #b0b0b0;
+            font-size: 14px;
+            padding: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <!--graphics background-->
+    <div class="graphic-bg">
+
+    </div>
+
+
+    <div class="nav">
+        <a href=""><div class="logo"></div></a>
+        <div class="banner">
+            <a href="">Board Rank BD</a>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <div class="card">
+            <h1 class="card-title">
+                HSC 2026
+            </h1>
+            <h3 class="description">Chittagong Board</h3>
+            <div class="link-btns">
+                <a href="rank/?id=h2026s" class="btn">Science <i class="fa fa-external-link" aria-hidden="true"></i></a>
+                <a href="#" class="btn">Commerce <i class="fa fa-external-link" aria-hidden="true"></i></a>
+                <a href="#" class="btn">Arts <i class="fa fa-external-link" aria-hidden="true"></i></a>
+            </div>
+        </div>
+
+        <div class="card">
+            <h1 class="card-title">
+                SSC 2026
+            </h1>
+            <h3 class="description">Chittagong Board</h3>
+            <div class="link-btns">
+                <a href="rank/?id=s2026s" class="btn">Science <i class="fa fa-external-link" aria-hidden="true"></i></a>
+                <a href="#" class="btn">Commerce <i class="fa fa-external-link" aria-hidden="true"></i></a>
+                <a href="#" class="btn">Arts <i class="fa fa-external-link" aria-hidden="true"></i></a>
+            </div>
+        </div>
+
+        <div class="card">
+            <h1 class="card-title">
+                SSC 2025
+            </h1>
+            <h3 class="description">Chittagong Board</h3>
+            <div class="link-btns">
+                <a href="rank/?id=s2025s" class="btn">Science <i class="fa fa-external-link" aria-hidden="true"></i></a>
+                <a href="#" class="btn">Commerce <i class="fa fa-external-link" aria-hidden="true"></i></a>
+                <a href="#" class="btn">Arts <i class="fa fa-external-link" aria-hidden="true"></i></a>
+            </div>
+        </div>
+        
+    </div>
+
+
+
+    <div class="foot">
+        <div class="disclaimer">
+            These rankings are made by fetching publicly available result data. Ranking is almost accurate. Ranking is first based on GPA , then Total marks. Students having same GPA and Total marks share the same ranking.  
+        </div>
+        <div class="author">Developer: Tamim Rahman</div>
+        <div class="copy-right">Copyright 2026 | All rights reserved</div>
+    </div>
+
+       
+<script>
+    window.addEventListener('resize', ()=>{
+        setGraphicBG();
+    });
+    setGraphicBG();
+    function setGraphicBG(){
+        var sw = window.innerWidth;
+        var sh = window.innerHeight;
+        var space = 20;
+        var x =  Math.ceil(sw/space);
+        var y = Math.ceil(sh / space);
+        var html = '';
+        for(var a=0; a<y; a++){
+            for(var b=0; b<x; b++){
+                html+=`<div style="left:${b*space}px;top:${a*space}px;" class="dot"></div>`;
+            }
+        }
+        document.querySelector('.graphic-bg').innerHTML = html;
+    }
+</script>
+</body>
+</html>
