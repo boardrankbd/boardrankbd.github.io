@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://boardrankbd.vercel.app/sitemap.xml
+Sitemap: https://boardrankbd.github.io/sitemap.xml
