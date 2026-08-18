@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Board Rank</title>
+    <meta id="meta-des" name="description" content="This is an unofficial board ranking">
+    <meta name="author" content="SSC, HSC, Board Rank, Result">
+    <meta name="google-site-verification" content="sE1DV48dbmHQ7E4854wQTDKiBRB_PuK7UegrusB1ems" />
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="bingbot" content="index, follow">
+    <meta name="yandexbot" content="index, follow">
+    <meta name="geo.region" content="BD">
+    <meta name="geo.country" content="Bangladesh">
+    <meta name="geo.placename" content="Chittagong, Bangladesh">
+    <meta http-equiv="content-language" content="en-us">
+    <link rel="shortcut icon" href="css/assets/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,1..1000&display=swap" rel="stylesheet">
+</head>
+<body>
+
+
+    <!--loader-->
+    <div class="loading-screen">
+        <div class="loader"></div>
+    </div>
+
+
+    <!--graphics background-->
+    <div class="graphic-bg">
+
+    </div>
+
+
+    <!--Error msg -->
+    <div class="error-msg">
+        <h2></h2>
+        <p></p>
+    </div>
+
+    <!--Main Rank Page-->
+    <div class="container" id="rank">
+
+        <div class="head">
+            <h1 class="text-1">
+                Board Rank
+            </h1>
+            <div class="text-2">
+                
+            </div>
+            <div class="page-counter">
+                Page 1
+            </div>
+            <div class="instructions">
+                <i class="fa fa-bullhorn" aria-hidden="true"></i> Click name to see detailed individual result. Click institute name to see institute wise result. This is not an official ranking but its almost accurate.
+            </div>
+        </div>
+
+        <div class="rank-table">
+
+        </div>
+
+        <div class="foot">
+            <button class="btn1"><i class="fa fa-chevron-left" aria-hidden="true"></i> Prev</button>
+                <span class="page-counter">Page 1 out of 1500</span>
+            <button class="btn2">Next <i class="fa fa-chevron-right" aria-hidden="true"></i></button>
+        </div>
+
+    </div>
+
+
+
+
+    <!--individual page-->
+    <div class="container" id="individual">
+
+        <div class="head">
+            <h1 class="text-1">
+                Individual Result
+            </h1>
+            <div class="text-2">
+                
+            </div>
+        </div>
+
+        <div class="search-bar">
+            <input type="text" placeholder="Roll Number">
+            <div class="search-btn">
+                <div class="icon"><i class="fa fa-search" aria-hidden="true"></i></div>
+            </div>
+        </div>
+
+        <div class="msg">Result Not Found</div>
+
+    </div>
+
+
+
+    <!--institute page code-->
+    <div class="container" id="institute">
+
+        <div class="head">
+            <h1 class="text-1">
+                Search Institutes
+            </h1>
+            <div class="text-2">
+                
+            </div>
+        </div>
+
+        <div class="search-bar">
+            <input type="text" placeholder="Institute Name" list="institutes">
+            <datalist id="institutes"></datalist>
+            <div class="search-btn">
+                <div class="icon"><i class="fa fa-search" aria-hidden="true"></i></div>
+            </div>
+        </div>
+
+        <div class="msg">No Institute Found</div>
+
+    </div>
+
+
+
+
+
+
+    <div class="popups">
+
+    </div>
+
+
+
+
+
+
+    <!--bottom nav bar-->
+    <div class="nav">
+        <div class="btns">
+            <div class="btn" id="rank" onclick="openPage('rank');">
+                <div class="icon"><i class="fa fa-bar-chart" aria-hidden="true"></i></div>
+                <div class="label">Rank</div>
+            </div>
+            <div class="btn" id="individual" onclick="openPage('individual');">
+                <div class="icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></div>
+                <div class="label">Individual</div>
+            </div>
+            <div class="btn" id="institute" onclick="openPage('institute');">
+                <div class="icon"><i class="fa fa-university" aria-hidden="true"></i></div>
+                <div class="label">Institute</div>
+            </div>
+            <div class="btn" id="search">
+                <div class="icon"><i class="fa fa-search" aria-hidden="true"></i></div>
+                <div class="label">Search</div>
+            </div>
+        </div>
+    </div>
+
+
+
+    
+<script>
+    function get(paramName) {
+        const params = new URLSearchParams(window.location.search);
+        return params.get(paramName);
+    }
+
+
+    function showError(msg, title){
+        document.querySelector('.error-msg').style.display='block';
+        document.querySelector('.error-msg h2').innerText = title;
+        document.querySelector('.error-msg p').innerText = msg;
+    }
+
+    function showLoader(){
+        document.querySelector('.loading-screen').style.opacity=1;
+        document.querySelector('.loading-screen').style.pointerEvents = 'all';
+    }
+    function hideLoader(){
+        document.querySelector('.loading-screen').style.opacity=0;
+        document.querySelector('.loading-screen').style.pointerEvents = 'none';
+    }
+
+    var dbScript = document.createElement("script");
+    dbScript.src = "database/"+get('id')+".js";
+
+
+    dbScript.onload = function() {
+        var pageScript = document.createElement("script");
+        pageScript.src = "js/main.js";
+        pageScript.onerror = function() {
+        showError('Failed to load app engine JavaScript Code', `Couldn't load script`);
+        hideLoader();
+    };
+    document.body.appendChild(pageScript);
+    };
+    dbScript.onerror = function() {
+        showError('Failed to load result data. The ranking might not be published yet', `Couldn't load data`);
+        hideLoader();
+    };
+    document.body.appendChild(dbScript);
+
+
+    window.addEventListener('resize', ()=>{
+        setGraphicBG();
+    });
+    setGraphicBG();
+    function setGraphicBG(){
+        var sw = window.innerWidth;
+        var sh = window.innerHeight;
+        var space = 20;
+        var x =  Math.ceil(sw/space);
+        var y = Math.ceil(sh / space);
+        var html = '';
+        for(var a=0; a<y; a++){
+            for(var b=0; b<x; b++){
+                html+=`<div style="left:${b*space}px;top:${a*space}px;" class="dot"></div>`;
+            }
+        }
+        document.querySelector('.graphic-bg').innerHTML = html;
+    }
+</script>
+</body>
+</html>
