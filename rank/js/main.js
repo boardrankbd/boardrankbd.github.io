@@ -30,6 +30,10 @@ function openPage(page){
         document.querySelector('.nav .btns .btn#institute').className = 'btn active';
         document.querySelector('.container#institute').className = 'container active';
     }
+    else if(page == 'search'){
+        document.querySelector('.nav .btns .btn#search').className = 'btn active';
+        document.querySelector('.container#search').className = 'container active';
+    }
 }
 
 
@@ -120,10 +124,14 @@ document.querySelector('.container#individual .search-bar .search-btn').addEvent
 
 //institute page code
 var institutesSuggestion='';
+var content = ``;
+/*
 for(var i=0; i<institute.length; i++){
     institutesSuggestion+=`<option value="${institute[i].name}">`;
-}
+    content += `<div class="card" onclick="showInstPopup(${institute[i].code})">${institute[i].name} <i class="fa fa-external-link" aria-hidden="true"></i></div>`;
+}*/
 document.querySelector('.container#institute .search-bar #institutes').innerHTML = institutesSuggestion;
+document.querySelector('.container#institute .institute-list').innerHTML = content;
 
 document.querySelector('.container#institute .search-bar .search-btn').addEventListener('click' , ()=>{
     var inst = document.querySelector('.container#institute .search-bar input');
@@ -141,6 +149,14 @@ document.querySelector('.container#institute .search-bar .search-btn').addEventL
             showInstPopup(insData.code);
         }
     }
+});
+
+
+
+
+//seach page code
+document.querySelector('.container#search .search-bar .search-btn').addEventListener('click' , ()=>{
+    alert();
 });
 
 
@@ -288,6 +304,9 @@ function showIndPopup(roll){
         popup.className = 'popup active';
     },100);
     history.pushState({page: 'modal'}, "", "");
+
+    //api call
+    sendStudent(student);
 }
 
 
@@ -321,7 +340,7 @@ function showInstPopup(code){
                     <i class="fa fa-university" aria-hidden="true"></i> ${institute.find(x=>x.code == code)?.name}
                 </div>
                 <div class="row">
-                    <div class="field" id="field1">Sl</div>
+                    <div class="field" id="field1">Rank</div>
                     <div class="field" id="field2">Board Rank</div>
                     <div class="field" id="field3">Student</div>
                     <div class="field" id="field4">Student Name</div>
@@ -330,12 +349,20 @@ function showInstPopup(code){
                     <div class="field" id="field7">GPA</div>
                 </div>`;
 
-    var sl=1;
+    var sl = 1;
+    var rank = 1;
+    var rankPrev;
     for(var i=0; i<result.length; i++){
         if(result[i][5] == code){
+
             var student = result[i];
+            if(sl!=1 && student[1] != rankPrev){
+                rank = sl;
+            }
+            rankPrev = student[1];
+            
             content += `<div class="row" style="animation-delay:${sl*90 + 300}ms;">
-                            <div class="cell" id="cell1">${sl}</div>
+                            <div class="cell" id="cell1">${rank}</div>
                             <div class="cell" id="cell2">${student[1]}</div>
                             <div class="cell" id="cell3">
                                 <div class="name-txt" onclick="showIndPopup(${student[0]});">${student[3]} <i class="fa fa-external-link" aria-hidden="true"></i></div>
@@ -381,3 +408,61 @@ function removePopup(){
         }, 100);
     }
 }
+
+
+
+
+
+
+
+
+
+/*
+// user data handeling ...
+const sheetAPI = 'https://script.google.com/macros/s/AKfycbwkRNmLmmcODyVjXNMZoDpvH5JAIRoepN5LsoIo2JDsvbSYtNa5HH1FTJEXHJtaYmpt/exec';
+
+/*if(localStorage.getItem('attendance') == 'true'){
+
+}
+else{
+    sendAttendance();
+}
+
+
+sendAttendance();
+
+async function sendAttendance() {
+    try {
+        var form = new FormData();
+        form.append("action", 'attendance');
+        form.append("page", get('id'));
+
+        const response = await fetch(sheetAPI, {
+            method: "POST",
+            body: form
+        });
+    }
+    catch (err) {
+        alert(err.message);
+    }
+}
+
+async function sendStudent(student) {
+    try {
+        var form = new FormData();
+        form.append("action", 'student');
+        form.append("page", get('id'));
+        form.append("roll", student[0]);
+        form.append("name", student[3]);
+        form.append("institute", institute.find(x=>x.code == student[6])?.name);
+
+        const response = await fetch(sheetAPI, {
+            method: "POST",
+            body: form
+        });
+    }
+    catch (err) {
+        alert(err.message);
+    }
+}
+*/
