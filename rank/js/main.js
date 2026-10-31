@@ -452,6 +452,7 @@ if(localStorage.getItem('attendance') == 'true'){
 }
 else{
     sendAttendance();
+    localStorage.setItem("attendance", "true");
 }
 
 async function sendAttendance() {
