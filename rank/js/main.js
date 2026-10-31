@@ -454,8 +454,6 @@ else{
     sendAttendance();
 }
 
-sendAttendance();
-
 async function sendAttendance() {
     try {
         var form =new FormData();
