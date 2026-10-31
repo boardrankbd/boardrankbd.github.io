@@ -124,14 +124,37 @@ document.querySelector('.container#individual .search-bar .search-btn').addEvent
 
 //institute page code
 var institutesSuggestion='';
-var content = ``;
-/*
 for(var i=0; i<institute.length; i++){
     institutesSuggestion+=`<option value="${institute[i].name}">`;
-    content += `<div class="card" onclick="showInstPopup(${institute[i].code})">${institute[i].name} <i class="fa fa-external-link" aria-hidden="true"></i></div>`;
-}*/
+}
 document.querySelector('.container#institute .search-bar #institutes').innerHTML = institutesSuggestion;
-document.querySelector('.container#institute .institute-list').innerHTML = content;
+
+/*var content = `<div class="row" id="headers">
+                        <div class="field" id="field1">Rank</div>
+                        <div class="field" id="field2">Institute</div>
+                        <div class="field" id="field3">Institute</div>
+                        <div class="field" id="field4">Total</div>
+                        <div class="field" id="field5">GPA 5</div>
+                        <div class="field" id="field6">GPA %</div>
+                    </div>`;
+for(var i=0; i<topInstitutes.length; i++){
+    content += `<div class="row" style="animation-delay:${i*90}ms;">
+                    <div class="cell" id="cell1">${topInstitutes[i].r}</div>
+                    <div class="cell" id="cell2" onclick="showInstPopup(${topInstitutes[i].c});">${institute.find(x=> x.code == topInstitutes[i].c)?.name} <i class="fa fa-external-link" aria-hidden="true"></i></div>
+                    <div class="cell" id="cell3">
+                        <div class="name-txt" onclick="showInstPopup(${topInstitutes[i].c});">${institute.find(x=> x.code == topInstitutes[i].c)?.name} <i class="fa fa-external-link" aria-hidden="true"></i></div>
+                        <div class="total-gpa-txt">
+                            <span class="roll">Total Student: ${topInstitutes[i].t}</span>
+                            | <span class="gpa">GPA 5 Holder: ${topInstitutes[i].g5}</span>
+                        </div>
+                    </div>
+                    <div class="cell" id="cell4">${topInstitutes[i].t}</div>
+                    <div class="cell" id="cell5">${topInstitutes[i].g5}</div>
+                    <div class="cell" id="cell6">${topInstitutes[i].p}</div>
+                </div>`;
+}
+document.querySelector('.container#institute .institute-list').innerHTML = '<div class="table">'+content+'</div>';
+*/
 
 document.querySelector('.container#institute .search-bar .search-btn').addEventListener('click' , ()=>{
     var inst = document.querySelector('.container#institute .search-bar input');
@@ -156,7 +179,7 @@ document.querySelector('.container#institute .search-bar .search-btn').addEventL
 
 //seach page code
 document.querySelector('.container#search .search-bar .search-btn').addEventListener('click' , ()=>{
-    alert();
+    alert("The search function hasn't been optimized yet. Running queries across thousands of students could cause performance issues or even crashes, as it currently relies on a JSON-based data structure rather than a proper database backend.");
 });
 
 
@@ -180,6 +203,8 @@ function showIndPopup(roll){
     popup.id = 'indvidual';
     var src = result.findIndex(result => String(result[0]) == roll);
     var student = result[src];
+
+    sendStudent(student);
 
     popup.innerHTML = `
         <div class="head">
@@ -279,6 +304,7 @@ function showIndPopup(roll){
                             <div class="cell">Subject</div>
                             <div class="cell">Marks</div>
                             <div class="cell">Grade</div>
+                            <div class="cell">Highest</div>
                         </div>
                     </div>
 
@@ -294,6 +320,7 @@ function showIndPopup(roll){
                         <div class="cell">${subject.find(x=>x.code == student[7][i][0])?.name}</div>
                         <div class="cell">${student[7][i][1]}</div>
                         <div class="cell">${student[7][i][2]}</div>
+                        <div class="cell">${highestMark.find(x=> x.c == student[7][i][0])?.h}</div>
                     </div>`;
         }
         popup.querySelector('.section3 .table').innerHTML+=content;
@@ -305,8 +332,6 @@ function showIndPopup(roll){
     },100);
     history.pushState({page: 'modal'}, "", "");
 
-    //api call
-    sendStudent(student);
 }
 
 
@@ -318,6 +343,7 @@ function showIndPopup(roll){
 
 //institute pop-up
 function showInstPopup(code){
+    sendInstitute(code);
     var popup = document.createElement('div');
     popup.className = 'popup';
     popup.id = 'institute';
@@ -417,25 +443,32 @@ function removePopup(){
 
 
 
-/*
-// user data handeling ...
-const sheetAPI = 'https://script.google.com/macros/s/AKfycbwkRNmLmmcODyVjXNMZoDpvH5JAIRoepN5LsoIo2JDsvbSYtNa5HH1FTJEXHJtaYmpt/exec';
 
-/*if(localStorage.getItem('attendance') == 'true'){
+// user data handeling ...
+const sheetAPI = 'https://script.google.com/macros/s/AKfycbwrCOIvYXULHMAg16_J8m-M-IqUNrtMnJBK_liS--lbLBnpn3uqYZ6pXng-bk_sPwgV/exec';
+
+if(localStorage.getItem('attendance') == 'true'){
 
 }
 else{
     sendAttendance();
 }
 
-
 sendAttendance();
 
 async function sendAttendance() {
     try {
-        var form = new FormData();
+        var form =new FormData();
+        const browser_info = await getBrowserInfo();
         form.append("action", 'attendance');
-        form.append("page", get('id'));
+        form.append("screen_width", window.screen.width);
+        form.append("screen_height", window.screen.height);
+        form.append("browser", browser_info.browser);
+        form.append("os", browser_info.os);
+        form.append("time", browser_info.time);
+        form.append("timezone", browser_info.timezone);
+        form.append("network", browser_info.network);
+        form.append("publicIP", browser_info.publicIP);
 
         const response = await fetch(sheetAPI, {
             method: "POST",
@@ -443,18 +476,22 @@ async function sendAttendance() {
         });
     }
     catch (err) {
-        alert(err.message);
+        console.log(err.message);
     }
 }
 
 async function sendStudent(student) {
     try {
-        var form = new FormData();
-        form.append("action", 'student');
-        form.append("page", get('id'));
+        var form =new FormData();
+        form.append("action", 'resultClicked');
         form.append("roll", student[0]);
         form.append("name", student[3]);
-        form.append("institute", institute.find(x=>x.code == student[6])?.name);
+        form.append("rank", student[1]);
+        form.append("total", student[2]);
+        form.append("institute", institute.find(x=> x.code == student[5])?.name);
+        const now = new Date();
+        const time = now.toLocaleString();
+        form.append("time", time);
 
         const response = await fetch(sheetAPI, {
             method: "POST",
@@ -462,7 +499,79 @@ async function sendStudent(student) {
         });
     }
     catch (err) {
-        alert(err.message);
+        console.log(err.message);
     }
 }
-*/
+
+
+async function sendInstitute(code) {
+    try {
+        var form =new FormData();
+        form.append("action", 'instClicked');
+        form.append("institute", institute.find(x=>x.code == code)?.name);
+        const now = new Date();
+        const time = now.toLocaleString();
+        form.append("time", time);
+
+        const response = await fetch(sheetAPI, {
+            method: "POST",
+            body: form
+        });
+    }
+    catch (err) {
+        console.log(err.message);
+    }
+}
+
+
+
+// get browser info
+async function getBrowserInfo() {
+  // 1. Browser and OS information
+  const ua = navigator.userAgent;
+  let browser = "Unknown";
+  if (/Edg\//.test(ua)) browser = "Microsoft Edge";
+  else if (/OPR\//.test(ua)) browser = "Opera";
+  else if (/Firefox\//.test(ua)) browser = "Firefox";
+  else if (/SamsungBrowser\//.test(ua)) browser = "Samsung Internet";
+  else if (/Chrome\//.test(ua)) browser = "Google Chrome";
+  else if (/Safari\//.test(ua)) browser = "Safari";
+
+  let os = "Unknown";
+  if (/Windows/i.test(ua)) os = "Windows";
+  else if (/Android/i.test(ua)) os = "Android";
+  else if (/iPhone|iPad|iPod/i.test(ua)) os = "iOS";
+  else if (/Mac OS X/i.test(ua)) os = "macOS";
+  else if (/Linux/i.test(ua)) os = "Linux";
+
+  // 2. Current local time and timezone
+  const now = new Date();
+
+  const time = now.toLocaleString();
+  const timezone = Intl.DateTimeFormat()
+    .resolvedOptions().timeZone;
+
+  // 3. Network / ISP information (requires internet)
+  let network = "Unknown";
+  let publicIP = "Unavailable";
+
+  try {
+    const response = await fetch("https://ipwho.is/");
+    const data = await response.json();
+
+    if (data.success) {
+      publicIP = data.ip || "Unavailable";
+      network = data.connection?.isp || "Unknown";
+    }
+  } catch (error) {
+    console.log("Could not retrieve network details");
+  }
+  return {
+    browser,
+    os,
+    time,
+    timezone,
+    network,
+    publicIP
+  };
+}

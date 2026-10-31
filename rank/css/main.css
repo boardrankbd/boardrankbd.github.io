@@ -573,30 +573,135 @@ body{
     display: none;
 }
 
+/*rank table*/
 .container#institute .institute-list{
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 12px;
-    padding: 0 16px;
-    margin: auto;
-    max-width: 1000px;
-    margin-top: 24px;
-}
-.container#institute .institute-list .card{
-    background: #14283ba3;
-    border-radius: 8px;
-    padding: 16px;
+    margin:12px 12px;
+    overflow-y: auto;
     color: #eee;
-    font-size: 13px;
+    font-size: 16px;
 }
-.container#institute .institute-list .card:hover{
-    background: #14283b;
-    cursor: pointer;
+.container#institute .institute-list .table{
+    margin: auto;
+    border: 1px solid #464646;
+    border-radius: 8px;
+    overflow: hidden;
+    width: 100%;
+    max-width: 1100px;
+}
+.container#institute .institute-list .table .row{
+    display: grid;
+    grid-template-columns: 60px 1fr 60px;
+    animation: appear 0.4s ease forwards;
+    transition: 0.3s;
+    opacity: 0;
+    transform: translateY(15px);
+}
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.container#institute .institute-list .table .row:nth-child(even){
+    background: #14283b7b;
+}
+.container#institute .institute-list .table .row:nth-child(odd){
+    background: #101e2b7b;
+}
+.container#institute .institute-list .table #field2,
+.container#institute .institute-list .table #field4,
+.container#institute .institute-list .table #field5{
+    display: none;
+}
+.container#institute .institute-list .table #cell2,
+.container#institute .institute-list .table #cell4,
+.container#institute .institute-list .table #cell5{
+    display: none;
+}
+.container#institute .institute-list .table .field{
+    padding: 8px;
+    font-size: 15px;
+    font-weight: bold;
+    color: #b6b7b8;
+}
+.container#institute .institute-list .table #field1{
+    text-align: center;
+}
+.container#institute .institute-list .table #field5{
+    text-align: center;
+}
+
+.container#institute .institute-list .table .cell{
+    padding:12px 8px;
+}
+.container#institute .institute-list .table #cell1{
+    text-align: center;
+    font-weight: bold;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 24px;
+    color: #b6b7b8;
+}
+.container#institute .institute-list .table #cell3 .name-txt{
+    font-weight: 600;
+    font-size: 15px;
     user-select: none;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
+    cursor: pointer;
+}
+.container#institute .institute-list .table #cell3 .name-txt:hover{
     text-decoration: underline;
+}
+.container#institute .institute-list .table #cell3 .total-gpa-txt{
+    font-size: 15px;
+    font-size: 13px;
+    color: #b6b7b8;
+    margin-top: 4px
+}
+.container#institute .institute-list .table #cell4{
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #b6b7b8;
+}
+.container#institute .institute-list .table #cell5{
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #b6b7b8;
+}
+.container#institute .institute-list .table #cell6{
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #b6b7b8;
+}
+
+@media (min-width:800px) {
+    .container#institute .institute-list .table #field2,
+    .container#institute .institute-list .table #field4,
+    .container#institute .institute-list .table #field5{
+        display: block;
+    }
+    .container#institute .institute-list .table #field3{
+        display: none;
+    }
+    .container#institute .institute-list .table #cell2,
+    .container#institute .institute-list .table #cell4,
+    .container#institute .institute-list .table #cell5{
+        display: block;
+    }
+    .container#institute .institute-list .table #cell3{
+        display: none;
+    }
+    .container#institute .institute-list .table .row{
+        grid-template-columns: 60px 1fr 80px 100px 80px;
+    }
 }
 /*institute page style ends*/
 
@@ -885,7 +990,7 @@ body{
 }
 .popups .popup .main .wrap .section3 .table .row{
     display: grid;
-    grid-template-columns: 60px 1fr 60px 60px;
+    grid-template-columns: 60px 1fr 60px 60px 70px;
 }
 .popups .popup .main .wrap .section3 .table .row:nth-child(even){
     background: #14283b;
@@ -897,7 +1002,8 @@ body{
 }
 .popups .popup .main .wrap .section3 .table .row .cell:nth-child(1),
 .popups .popup .main .wrap .section3 .table .row .cell:nth-child(3),
-.popups .popup .main .wrap .section3 .table .row .cell:nth-child(4){
+.popups .popup .main .wrap .section3 .table .row .cell:nth-child(4),
+.popups .popup .main .wrap .section3 .table .row .cell:nth-child(5){
     text-align: center;
 }
 .popups .popup .main .wrap .section3 .table .row#headers{
