@@ -66,7 +66,7 @@ body{
     border-radius: 50%;
     position: absolute;
     background: rgba(255, 255, 255, 0.1);
-    animation: drag 10s linear infinite;
+    /*animation: drag 10s linear infinite;*/
 }
 @keyframes drag {
     0%{
@@ -990,7 +990,7 @@ body{
 }
 .popups .popup .main .wrap .section3 .table .row{
     display: grid;
-    grid-template-columns: 60px 1fr 60px 60px 70px;
+    grid-template-columns: 60px minmax(0, 1fr) 60px 60px 70px;
 }
 .popups .popup .main .wrap .section3 .table .row:nth-child(even){
     background: #14283b;
