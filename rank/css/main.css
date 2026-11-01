@@ -1006,6 +1006,11 @@ body{
 .popups .popup .main .wrap .section3 .table .row .cell:nth-child(5){
     text-align: center;
 }
+.popups .popup .main .wrap .section3 .table .row .cell:nth-child(2){
+    min-width: 0;
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
 .popups .popup .main .wrap .section3 .table .row#headers{
     font-weight: 600;
     color: #9a9999;
