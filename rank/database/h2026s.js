@@ -1,4 +1,4 @@
-var metadata = {"exam":"HSC","year":"2026","board":"Chattogram","session":"2024-2025","group":"Science"};
+var metadata = {"exam":"HSC (Re-examined)","year":"2026","board":"Chattogram","session":"2024-2025","group":"Science"};
 
 var subject = [{"code":0,"name":"(279)"},{"code":101,"name":"BANGLA"},{"code":107,"name":"ENGLISH"},{"code":123,"name":"PSYCHOLOGY"},{"code":129,"name":"STATISTICS"},{"code":174,"name":"PHYSICS"},{"code":176,"name":"CHEMISTRY"},{"code":178,"name":"BIOLOGY"},{"code":180,"name":"ENGINEERING DRAWING & WORKSHOP PRACTICE"},{"code":239,"name":"AGRICULTURE STUDIES"},{"code":265,"name":"HIGHER MATHEMATICS"},{"code":275,"name":"INFORMATION & COMMUNICATION TECHNOLOGY"}];
 
